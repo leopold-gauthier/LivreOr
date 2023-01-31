@@ -1,6 +1,10 @@
 <?php
 session_start();
 require "./include/config.php";
+if (!isset($_SESSION['login'])) {
+    header("Location: ./connexion.php");
+} else {
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,42 +23,93 @@ require "./include/config.php";
     </header>
 
     <main>
-        <h2>Edit Profile</h2>
-        <form method="post" action="profil.php">
-            <label for="login">Login</label>
-            <input type="text" name="login" id="login" value="<?= $_SESSION['users'][0]['login']  ?>" required />
-            <label for="password">Password</label>
-            <input type="password" name="password" id="password" required />
-            <label for="cpassword">Confirmation</label>
-            <input type="password" name="cpassword" id="cpassword" required />
+        <h3>Edit Profile</h3>
+        <form method="post" action="profil.php" enctype="multipart/form-data">
+            <div class="editelement">
+                <label for="login">Avatar</label>
+                <input type="file" name="avatar" id="avatar" />
+            </div>
+            <div class="editelement">
+                <label for="login">Login</label>
+                <input type="text" name="login" id="login" value="<?= $_SESSION['login'];  ?>" />
+            </div>
+            <div class="editelement">
+                <label>New Password</label>
+                <input type="password" name="newpassword" />
+            </div>
+            <div class="editelement">
+                <label>Confirm New Password</label>
+                <input type="password" name="cnewpassword" />
+            </div>
+            <div class="editelement">
+                <label>Old password for register</label>
+                <input type="password" name="password" required />
+            </div>
+
+            <input class="bouton" type="submit" name="envoi" id="button" value="Edit">
             <?php
             if (isset($_POST['envoi'])) {
                 $login = htmlspecialchars($_POST['login']);
-                $password = md5($_POST['password']); // md5'() pour crypet le mdp
-                $id = $_SESSION['users'][0]['id'];
+                $password = $_POST['password']; // md5'() pour crypet le 
+                $newpassword = $_POST['newpassword'];
+                $cnewpassword = $_POST['cnewpassword'];
+                $id = $_SESSION['id'];
 
                 $recupUser = $bdd->prepare("SELECT * FROM utilisateurs WHERE login = ? AND id != ?");
                 $recupUser->execute([$login, $id]);
                 $insertUser = $bdd->prepare("UPDATE utilisateurs SET login = ? , password=  ? WHERE id = ?");
 
-                if (empty($login) || empty($password) || empty($_POST['cpassword'])) {
+                if (empty($password)) {
                     echo "<p><i class='fa-solid fa-triangle-exclamation'></i>&nbspVeuillez complétez tous les champs.</p>";
                 } elseif (!preg_match("#^[a-z0-9]+$#", $login)) {
                     echo "<p><i class='fa-solid fa-triangle-exclamation'></i>&nbspLe login doit être renseigné en lettres minuscules sans accents, sans caractères spéciaux.</p>";
-                } elseif ($password != md5($_POST['cpassword'])) {
-                    echo "<p><i class='fa-solid fa-triangle-exclamation'></i>&nbspLes deux mots de passe sont differents.</p>";
-                } elseif ($password != $_SESSION['users'][0]['password']) {
-                    echo  "<p><i class='fa-solid fa-triangle-exclamation'></i>&nbspCe n'est pas le bon mot de passe</p>";
+                } elseif ($password != $_SESSION['password']) {
+                    echo "<p><i class='fa-solid fa-triangle-exclamation'></i>&nbspCe n'est pas le bon mot de passe</p>";
                 } elseif ($recupUser->rowCount() > 0) {
                     echo "<p><i class='fa-solid fa-triangle-exclamation'></i>&nbspCe login est déjà utilisé.</p>";
                 } else {
-                    $insertUser->execute([$login, $password, $id]);
-                    $_SESSION['users'][0]['login'] = $login;
-                    header("Location: profil.php");
+
+                    if ($newpassword == $_SESSION['password'] && $newpassword == $password) {
+                        echo "<p><i class='fa-solid fa-triangle-exclamation'></i>&nbspMot de passe similaire</p>";
+                    } elseif ($newpassword == $cnewpassword && $newpassword != null && $cnewpassword != null) {
+                        $insertUser->execute([$login, $newpassword, $id]);
+                        $_SESSION['login'] = $login;
+                        $_SESSION['password'] = $newpassword;
+                        header("Location: profil.php");
+                    } else {
+                        $insertUser->execute([$login, $password, $id]);
+                        $_SESSION['login'] = $login;
+                        $_SESSION['password'] = $password;
+                        header("Location: profil.php");
+                    }
+                }
+                if (isset($_FILES['avatar']) and !empty($_FILES['avatar']['name'])) {
+                    $tailleMax = 2097152;
+                    $extensionsValides = array('jpg', 'jpeg', 'gif', 'png');
+                    if ($_FILES['avatar']['size'] <= $tailleMax) {
+                        $extensionUpload = strtolower(substr(strrchr($_FILES['avatar']['name'], '.'), 1));
+                        if (in_array($extensionUpload, $extensionsValides)) {
+                            $chemin = "../membres/avatars/" . $_SESSION['id'] . "." . $extensionUpload;
+                            $resultat = move_uploaded_file($_FILES['avatar']['tmp_name'], $chemin);
+                            if ($resultat) {
+                                $updateavatar = $bdd->prepare('UPDATE utilisateurs SET avatar = :avatar WHERE id = :id');
+                                $updateavatar->execute(array(
+                                    'avatar' => $_SESSION['id'] . "." . $extensionUpload,
+                                    'id' => $_SESSION['id']
+                                ));
+                                header('Location: profil.php?id=' . $_SESSION['id']);
+                            } else {
+                                $msg = "Erreur durant l'importation de votre photo de profil";
+                            }
+                        } else {
+                            $msg = "Votre photo de profil doit être au format jpg, jpeg, gif ou png";
+                        }
+                    } else {
+                        $msg = "Votre photo de profil ne doit pas dépasser 2Mo";
+                    }
                 }
             }
             ?>
-            <input type="submit" name="envoi" id="button" value="Edit">
         </form>
     </main>
 </body>

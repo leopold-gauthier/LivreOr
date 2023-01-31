@@ -21,17 +21,23 @@ require("./include/config.php");
     <main>
 
         <form method="POST" action="">
-            <label for="login">Login</label>
-            <input type="text" id="login" name="login" placeholder="Login" required autofocus autocomplete="off">
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" placeholder="Password" required>
-            <label for="cpassword">Confirmation</label>
-            <input type="password" id="cpassword" name="cpassword" placeholder="Confirmation" required>
-            <input type="submit" name="envoi" id="button" value="Sign Up">
+            <div class="editelement">
+                <label for="login">Login</label>
+                <input type="text" id="login" name="login" placeholder="Login" required autofocus autocomplete="off">
+            </div>
+            <div class="editelement">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Password" required>
+            </div>
+            <div class="editelement">
+                <label for="cpassword">Confirmation</label>
+                <input type="password" id="cpassword" name="cpassword" placeholder="Confirmation" required>
+            </div>
+            <input class="bouton" type="submit" name="envoi" id="button" value="Sign Up">
             <?php
             if (isset($_POST['envoi'])) {
                 $login = htmlspecialchars($_POST['login']);
-                $password = md5($_POST['password']); // md5'() pour crypet le mdp
+                $password = $_POST['password']; // md5'() pour crypet le mdp
 
                 $recupUser = $bdd->prepare("SELECT * FROM utilisateurs WHERE login = ?");
                 $recupUser->execute([$login]);
@@ -40,7 +46,7 @@ require("./include/config.php");
                     echo "<p><i class='fa-solid fa-triangle-exclamation'></i>&nbspVeuillez complétez tous les champs.</p>";
                 } elseif (!preg_match("#^[a-z0-9]+$#", $login)) {
                     echo "<p><i class='fa-solid fa-triangle-exclamation'></i>&nbspLe login doit être renseigné en lettres minuscules sans accents, sans caractères spéciaux.</p>";
-                } elseif ($password != md5($_POST['cpassword'])) {
+                } elseif ($password != $_POST['cpassword']) {
                     echo "<p><i class='fa-solid fa-triangle-exclamation'></i>&nbspLes deux mots de passe sont differents.</p>";
                 } elseif ($recupUser->rowCount() > 0) {
                     echo "<p><i class='fa-solid fa-triangle-exclamation'></i>&nbspCe login est déjà utilisé.</p>";

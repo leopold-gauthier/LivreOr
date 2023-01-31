@@ -23,7 +23,7 @@ nav a{
     color:rgba(245, 176, 47, 0.742);
 }
 main{
-    margin-top: 10%;
+    /* margin-top: 10%; */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -32,6 +32,7 @@ main{
     border: 2px rgba(245, 176, 47, 0.742) solid;
     width: 50%;
     margin-left: 25%;
+    margin-bottom: 20%;
     
 }
 
@@ -39,11 +40,37 @@ h1{
     font-size: xx-large;
     color: white;
 }
+h2{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    font-size: x-large;
+    color: rgba(245, 176, 47, 0.742);
+    margin: 0%;
+    align-items: center;
+    align-content: center;
+    text-decoration: 1px underline;
+}
+h3{
+    font-size: x-large;
+    color:rgba(245, 176, 47, 0.742);
+    margin: 5%;
+}
 
 a{
     color:rgba(245, 176, 47, 0.742);
     text-decoration: none;
 }
+p{
+    margin: 0%;
+    color: white;
+    font-size: 17px;
+}
+form{
+    display: flex;
+    flex-direction: column;
+ }
+
 label {
     /* Pour être sûrs que toutes les étiquettes ont même taille et sont correctement alignées */
     display: inline-block;
@@ -78,9 +105,14 @@ footer a{
 
 
 
-/* PAGE EDIT PROFILE & INSCRIPTION*/
+/* FOCUS PARTIE*/
 
-
+h2 img{
+height: 50px;
+width: 50px;
+margin: 0% 2% 2% 0%;
+border-radius: 50%;
+}
 
 #editelement{
     display: flex;
@@ -94,6 +126,24 @@ footer a{
 
 .editelement{
     margin-top:10%;
+}
+
+.message{
+    width: 75%;
+    display: inline;
+    margin: 3%;
+}
+#message{
+    word-wrap: break-word;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+#message a{
+    font-family: 'Roboto', sans-serif;
+    position: fixed;
+    width: 10%;
 }
 
 @media screen and (max-width: 768px){
@@ -111,6 +161,18 @@ footer a{
     h1{
         font-size: 18px;
     }
+    h2{
+        font-size: 17px;
+        
+    }
+    label{
+        text-align: left;
+
+    }
+    form{
+       display: flex;
+       flex-direction: column;
+    }
     footer{
         margin-top: 2%;
         display: flex;
@@ -121,7 +183,20 @@ footer a{
     footer a,p{
         font-size: 15px;
     }
+    .bouton{
+        text-align: center;
+        padding: 5%;
+        width: 80%;
+    }
+    .editelement input{
+        
+        width: 80%;
+    }
     
+    .editelement{
+        display: flex;
+        flex-direction: column;
+    }
 }
 
 @media screen and (max-width: 425px){
@@ -133,17 +208,9 @@ footer a{
         margin: 4%;
         font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     }
-    main{
-        margin-top: 0%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        font-family: 'Roboto', sans-serif;
-        border: 2px rgba(245, 176, 47, 0.742) solid;
-        width: 50%;
-        margin-left: 25%;
-        font-size: 15px;
+    
+    h2{
+        font-size: 14px;
         
     }
     label {
@@ -154,12 +221,52 @@ footer a{
     footer a,p{
         font-size: 12px;
     }
+    
+    .bouton{
+        text-align: center;
+        padding: 5%;
+        width: 80%;
+    }
+    .editelement input{
+        
+        width: 80%;
+    }
+    
+    #message{
+        word-wrap: break-word;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 0%;
+        padding: 0%;
+        /* justify-content: flex-start; */
+    }
+    #message a{
+        text-align: center;
+        font-family: 'Roboto', sans-serif;
+        position: relative;
+        width: 100%;
+        margin: 0% 0% 5% 0%;
+    }
+
+    .editelement{
+        display: flex;
+        flex-direction: column;
+    }
+    .editelement label{
+        font-size: 10px;
+    }
 }
     
     /* MEDIA QUERY POUR MOBILE */
     @media screen and (max-width: 376px){
-        #tournamenttable {
-            font-size: 0.2rem;
-            }
+        h2{
+            font-size: 10px;
+            
+        }
+
+        p{
+            font-size: 9px;
+        }
     }
     

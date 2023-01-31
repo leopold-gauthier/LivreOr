@@ -23,11 +23,11 @@ require "./include/config.php";
             <input type="text" id="login" name="login" placeholder="Login" required autofocus autocomplete="off">
             <label for="password">Password</label>
             <input type="password" id="password" name="password" placeholder='Password' required autocomplete="off">
-            <input type="submit" name="envoi" value="Log In" id="button">
+            <input class="bouton" type="submit" name="envoi" value="Log In" id="button">
             <?php
             if (isset($_POST['envoi'])) {
                 $login = htmlspecialchars($_POST['login']);
-                $password = md5($_POST['password']); // md5'() pour crypet le mdp
+                $password = $_POST['password']; // md5'() pour crypet le mdp
 
                 if (!empty($login) && !empty($password)) {
                     $recupUser = $bdd->prepare("SELECT * FROM utilisateurs WHERE login = ? AND password = ?");
@@ -36,7 +36,8 @@ require "./include/config.php";
                     if ($recupUser->rowCount() > 0) {
                         $_SESSION['login'] = $login;
                         $_SESSION['password'] = $password;
-                        $_SESSION['users'] = $recupUser->fetchAll(PDO::FETCH_ASSOC);
+                        $recupUser = $recupUser->fetchAll(PDO::FETCH_ASSOC);
+                        $_SESSION = $recupUser[0];
                         header("Location: ../index.php");
                     } else {
                         echo "<p><i class='fa-solid fa-triangle-exclamation'></i>&nbspVotre login ou mot de passe incorect.</p>";

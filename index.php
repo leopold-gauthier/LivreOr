@@ -25,15 +25,16 @@ require "./php/include/config.php"
             <?php
             if (isset($_SESSION['login'])) {
                 echo '<a href="./index.php">ACCUEIL</a>';
-                echo '<a href="./php/profil.php">PROFIl</a>';
-                echo "<a href='./php/commentaire.php'>AJOUT</a>";
+                echo '<a href="./php/profil.php">PROFILE</a>';
+                echo "<a href='./php/livreor.php'>NEWS</a>";
                 if ($_SESSION['login'] == 'admin') {
                     echo '<a href="./php/admin.php">ADMIN</a>';
                 }
-                echo '<a href="./php/logout.php">LOGOUT</a>';
+                echo '<a href="./php/logout.php"><i class="fa-solid fa-right-from-bracket"></i>
+                </a>';
             } else {
                 echo '<a href="./index.php">ACCUEIL</a>';
-                echo "<a href='./php/livreor.php'>LIVRE D'OR</a>";
+                echo "<a href='./php/livreor.php'>NEWS</a>";
                 echo '<a href="./php/connexion.php">SE CONNECTER</a>';
                 echo "<a href='./php/inscription.php'>S'INSCRIRE</a>";
             }
@@ -42,20 +43,16 @@ require "./php/include/config.php"
     </header>
 
     <main>
-        <h1>Bienvenue<br>
+        <h1>
             <?php
             if (isset($_SESSION['login'])) {
-                echo $_SESSION['users'][0]['login'];
+                echo "Welcome back " . $_SESSION['login'] . " !";
+            } else {
+                echo "Welcome";
             }
             ?>
         </h1>
-        <style>
-            h1 {
-                text-align: center;
-                font-size: 5rem;
-                margin: 5% 0 0;
-            }
-        </style>
+        <h3>Bienvenue sur ce projet !</h3>
     </main>
 </body>
 
