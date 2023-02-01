@@ -23,7 +23,7 @@ if (!isset($_SESSION['login'])) {
         <?php include_once "./include/header-include.php"; ?>
     </header>
     <main>
-        <h3>Ajout d'une news</h3>
+        <h3>Ajouter / Modifier une news</h3>
         <form method="post" action="">
             <div class="editelement">
                 <label>Commenter</label><br>

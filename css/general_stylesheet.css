@@ -146,6 +146,18 @@ border-radius: 50%;
     width: 10%;
 }
 
+
+
+#modified a{
+    /* width: 20%; */
+    /* height: auto; */
+    /* background-color: rgba(0, 0, 0, 0.66)55; */
+    color:rgba(245, 176, 47, 0.742);
+    position: static;
+    text-align: end;
+    border: none;
+}
+
 @media screen and (max-width: 768px){
     
     nav{

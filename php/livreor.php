@@ -40,11 +40,10 @@ require "./include/config.php";
         <main>
             <h1><u>News</u></h1>
             <?php
-            $recupUser = $bdd->query("SELECT login, avatar, commentaire , date FROM commentaires INNER JOIN utilisateurs ON utilisateurs.id = commentaires.id_utilisateur ORDER BY date DESC");
+            $recupUser = $bdd->query("SELECT `commentaires`.`id`, login, avatar, commentaire , date FROM commentaires INNER JOIN utilisateurs ON utilisateurs.id = commentaires.id_utilisateur ORDER BY date DESC");
             $livreor = $recupUser->fetchAll();
             for ($i = 0; $i < sizeof($livreor); $i++) :
             ?>
-
                 <div class="message">
                     <h2><?php if ($livreor[$i]['login'] === 'admin') {
                             echo "<img height='21px' src='../css/icone-utilisateur-rouge.png'>";
@@ -55,15 +54,33 @@ require "./include/config.php";
                         ?>
                         Posté par <?= $livreor[$i]['login'] ?> le <?= $livreor[$i]['date'] ?>
                     </h2>
-                    <p><i><?= $livreor[$i]['commentaire'] ?></i></p>
+                    <p>
+                        <i>
+                            <?= $livreor[$i]['commentaire'] ?>
+                        </i>
+                    </p>
+                    <div id="modified">
+                        <?php
+                        if (isset($_SESSION['login']) == null) {
+                            echo "";
+                        } elseif ($livreor[$i]['login'] == $_SESSION['login'] || $_SESSION['login'] == 'admin') { ?>
+                            <a href="./delete_com.php?id=<?= $livreor[$i]['id'] ?>">Supprimer</a>
+                            |
+                            <a href="./edit_com.php?id=<?= $livreor[$i]['id'] ?>">Editer</a>
+                        <?php
+                        }
+                        ?>
+                    </div>
                 </div>
 
 
             <?php
-            endfor
+            endfor;
+
             ?>
-        </main>
     </div>
+    </main>
 </body>
 
 </html>
+<?php

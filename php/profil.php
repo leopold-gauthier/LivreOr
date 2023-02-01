@@ -48,11 +48,14 @@ if (!isset($_SESSION['login'])) {
 
             <input class="bouton" type="submit" name="envoi" id="button" value="Edit">
             <?php
+            // DEBUT DU POST //
+
             if (isset($_POST['envoi'])) {
                 $login = htmlspecialchars($_POST['login']);
                 $password = $_POST['password']; // md5'() pour crypet le 
                 $newpassword = $_POST['newpassword'];
                 $cnewpassword = $_POST['cnewpassword'];
+                $avatar = $_POST['avatar'];
                 $id = $_SESSION['id'];
 
                 $recupUser = $bdd->prepare("SELECT * FROM utilisateurs WHERE login = ? AND id != ?");
@@ -83,9 +86,11 @@ if (!isset($_SESSION['login'])) {
                         header("Location: profil.php");
                     }
                 }
+                // Rajouter Avatar au moment du Post
                 if (isset($_FILES['avatar']) and !empty($_FILES['avatar']['name'])) {
                     $tailleMax = 2097152;
                     $extensionsValides = array('jpg', 'jpeg', 'gif', 'png');
+
                     if ($_FILES['avatar']['size'] <= $tailleMax) {
                         $extensionUpload = strtolower(substr(strrchr($_FILES['avatar']['name'], '.'), 1));
                         if (in_array($extensionUpload, $extensionsValides)) {
@@ -108,6 +113,8 @@ if (!isset($_SESSION['login'])) {
                         $msg = "Votre photo de profil ne doit pas dépasser 2Mo";
                     }
                 }
+
+                /////
             }
             ?>
         </form>
