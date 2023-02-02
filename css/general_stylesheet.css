@@ -157,7 +157,9 @@ border-radius: 50%;
     text-align: end;
     border: none;
 }
-
+.reponse{
+    margin: 5%;
+}
 @media screen and (max-width: 768px){
     
     nav{
