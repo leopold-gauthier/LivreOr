@@ -115,21 +115,6 @@ require "./include/config.php";
                                         <?= $reponse[$a]['reponse'] ?>
                                     </i>
                                 </p>
-                                <div id="modified">
-                                    <?php
-                                    if (isset($_SESSION['login']) == null) {
-                                        echo "";
-                                    } elseif ($reponse[$a]['login'] == $_SESSION['login'] || $_SESSION['login'] == 'admin') { ?>
-                                        <a href="./delete_com.php?id=<?= $livreor[$i]['id'] ?>">Supprimer</a>
-                                        |
-                                        <a href="./commentaire.php?edit=<?= $livreor[$i]['id'] ?>">Editer</a>
-                                    <?php
-                                    } elseif ($livreor[$i]['login'] != $_SESSION['login']) { ?>
-                                        <a href="./livreor.php?reponse=<?= $livreor[$i]['id'] ?>">Répondre</a>
-                                    <?php
-                                    }
-                                    ?>
-                                </div>
                             </div>
 
                     <?php
