@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mar. 31 jan. 2023 à 15:22
+-- Généré le : jeu. 02 fév. 2023 à 19:19
 -- Version du serveur : 8.0.31
 -- Version de PHP : 8.0.26
 
@@ -33,18 +33,43 @@ CREATE TABLE IF NOT EXISTS `commentaires` (
   `commentaire` text COLLATE utf8mb4_general_ci NOT NULL,
   `id_utilisateur` int NOT NULL,
   `date` datetime NOT NULL,
+  `date_time_edition` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=66 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `commentaires`
 --
 
-INSERT INTO `commentaires` (`id`, `commentaire`, `id_utilisateur`, `date`) VALUES
-(20, 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Est maiores consequatur dolor ab sit qui iste delectus. Deserunt doloremque, quam officiis, culpa saepe quis dolor et dolorem quod illo rerum fuga consequatur sed iste maxime iure mollitia totam eligendi. Nam aperiam dolorem inventore recusandae provident id exercitationem magnam nihil ex sit, omnis facilis odit voluptatem doloribus temporibus expedita consequatur eaque iusto ut eveniet placeat. Rerum doloribus commodi, voluptate quo totam hic tempora cumque distinctio rem error magni eveniet. Reiciendis nihil dolorem qui, earum, nisi iusto accusamus libero eos quia illo, at beatae in repudiandae adipisci nam possimus reprehenderit consequuntur dolorum?', 8, '2023-01-31 10:32:36'),
-(23, 'salut comment ca ce passe ici bien les copains ?', 10, '2023-01-31 14:07:08'),
-(21, 'sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss', 8, '2023-01-31 10:32:51'),
-(22, 'salut juis nouveau les copains !', 9, '2023-01-31 10:56:26');
+INSERT INTO `commentaires` (`id`, `commentaire`, `id_utilisateur`, `date`, `date_time_edition`) VALUES
+(63, '           jajajajajajaaj                         ', 9, '2023-02-02 16:24:50', '0000-00-00 00:00:00'),
+(64, '         zoefjkjqkjslkzslkedz                           ', 9, '2023-02-02 16:24:55', '0000-00-00 00:00:00'),
+(65, '               jkezkjekjefsnksfdlknsflkn                     ', 8, '2023-02-02 16:31:42', '0000-00-00 00:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `reponses`
+--
+
+DROP TABLE IF EXISTS `reponses`;
+CREATE TABLE IF NOT EXISTS `reponses` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `reponse` text COLLATE utf8mb4_general_ci NOT NULL,
+  `id_utilisateur` int NOT NULL,
+  `id_commentaire` int NOT NULL,
+  `date_reponse` date NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `reponses`
+--
+
+INSERT INTO `reponses` (`id`, `reponse`, `id_utilisateur`, `id_commentaire`, `date_reponse`) VALUES
+(1, 'djdjaja', 9, 63, '2023-02-08'),
+(3, 'wsh', 8, 65, '2023-02-07'),
+(4, 'wsh', 8, 65, '2023-02-07');
 
 -- --------------------------------------------------------
 
@@ -66,7 +91,7 @@ CREATE TABLE IF NOT EXISTS `utilisateurs` (
 --
 
 INSERT INTO `utilisateurs` (`id`, `login`, `password`, `avatar`) VALUES
-(9, 'red', 'red', '9.png'),
+(9, 'red', 'red', '9.jpg'),
 (8, 'admin', 'admin', '8.png'),
 (10, 'dropz', 'dropz', '10.jpg');
 COMMIT;
