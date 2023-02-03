@@ -26,8 +26,8 @@ if (!isset($_SESSION['login'])) {
     </header>
     <main>
         <?php
+        //////////////////////////////////////////// PARTIE COMMENTAIRE /////////////////////////////////////////////
         $mode_edition = 0;
-
         if (isset($_GET['edit']) and !empty($_GET['edit'])) {
             $mode_edition = 1;
             $edit_id = htmlspecialchars($_GET['edit']);
@@ -61,21 +61,58 @@ if (!isset($_SESSION['login'])) {
                 } else {
                     // HERE
                     // need condition pour vérifier si bien le bon users qui veut modifier
-                    $update = $bdd->prepare('UPDATE commentaires SET commentaire = ? , date_time_edition = NOW() WHERE id = ?');
-                    $update->execute([$commentaire, $edit_id]);
+                    $update = $bdd->prepare('UPDATE commentaires SET commentaire = ? , date_time_edition = ? WHERE id = ?');
+                    $update->execute([$commentaire, $date, $edit_id]);
                     header("Location: ./livreor.php");
                 }
             } else {
                 $message = "Veuillez écrire un commentaire";
             }
         }
+        //////////////////////////////////////////////////////// REPONSE //////////////////////
+        // TODO
+        if (isset($_GET['reponse']) and !empty($_GET['reponse'])) {
+            $mode_reponse = 1;
+            $reponse = htmlspecialchars($_GET['reponse']);
+            $reponse_com = $bdd->prepare('SELECT reponse FROM reponses WHERE id = ?');
+            $reponse_com->execute(array($reponse));
+
+
+            /////TODO
+            //BUG AU NIVEAU DE LA REPONSE LA REQUETE PAR AU COMMENTAIRE ET NON A LA REPONSE !!
+        }
+        if (isset($_POST['reponse'])) {
+            $reponse = $_POST['reponse'];
+            $id_commentaire = $_GET['reponse'];
+            $id_utilisateur = $_SESSION['id'];
+            $date = date("Y-m-d H:i:s");
+            if (!empty($reponse)) {
+                $getReponse = $bdd->prepare("INSERT INTO reponses (reponse, id_utilisateur ,id_commentaire  ,date_reponse) VALUES (?,?,?,?)");
+                $getReponse->bindValue(":id_utilisateur", $id_utilisateur, ":id_commentaire", $id_commentaire);
+                $getReponse->execute([$reponse, $id_commentaire, $id_utilisateur, $date]);
+                $message = "Votre message a bien été posté";
+                header("Location: ./livreor.php");
+            } else {
+                // HERE
+                // need condition pour vérifier si bien le bon users qui veut modifier
+                $update = $bdd->prepare('UPDATE reponses SET reponse = ? , date_reponse = ? WHERE id = ?');
+                $update->execute([$commentaire, $date, $edit_id]);
+                header("Location: ./livreor.php");
+            }
+        } else {
+            $message = "Veuillez écrire un commentaire";
+        }
         ?>
         <h3>
             <?php
             if ($mode_edition == 1) {
                 echo "Modifier";
-            } else {
+            } elseif ($mode_edition == 0) {
                 echo "Ajouter";
+            } else if ($mode_reponse_edition == 1) {
+                echo "Modifier votre réponse";
+            } elseif ($mode_reponse_edition == 0) {
+                echo "Répondre";
             }
             ?>
         </h3>
