@@ -119,7 +119,7 @@ require "./include/config.php";
                                     if (isset($_SESSION['login']) == null) {
                                         echo "";
                                     } elseif ($reponse[$a]['login'] === $_SESSION['login'] || $_SESSION['login'] === 'admin') { ?>
-                                        <a href="./delete_reponse.php?id=<?= $reponse[$a]['id'] ?>">Supprimer</a>
+                                        <a href="./delete_rep.php?id=<?= $reponse[$a]['id'] ?>">Supprimer</a>
                                         |
                                         <a href="./reponse.php?edit=<?= $reponse[$a]['id'] ?>">Editer</a>
                                     <?php
