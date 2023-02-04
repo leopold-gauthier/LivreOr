@@ -26,17 +26,12 @@ if (!isset($_SESSION['login'])) {
     </header>
     <main>
         <?php
-        //"SELECT * FROM commentaires  JOIN utilisateurs ON utilisateurs.id = commentaires.id_utilisateur JOIN reponses ON reponses.id_commentaire = commentaires.id WHERE = ?");
-        // $recupUser = $bdd->query("SELECT * FROM commentaires  JOIN utilisateurs ON utilisateurs.id = commentaires.id_utilisateur JOIN reponses ON reponses.id_commentaire = commentaires.id ");
-        // $livreor = $recupUser->fetchALL(PDO::FETCH_ASSOC);
-
-        // var_dump($livreor);
-        //////////////////////////////////////////// AFFICHER REPONSE POUR EDITER /////////////////////////////////////////////
         $mode_edition = 0;
         $message = "";
-        // TODO FAIRE CET PAGE
-        // if (isset($_GET['edit']) == $livreor[0]['id'] && isset($_SESSION['id']) == $livreor['id_utilisateur']) {
-        // echo 'tout correspond';
+
+        //////////////////////////////////////////// AFFICHER REPONSE POUR EDITER /////////////////////////////////////////////
+
+
         if (isset($_GET['edit']) and !empty($_GET['edit'])) {
             $mode_edition = 1;
             $edit_id = htmlspecialchars($_GET['edit']);
@@ -52,20 +47,15 @@ if (!isset($_SESSION['login'])) {
         } else {
             // header("Location: ./livreor.php");
         }
-        // } else {
-        //     // header("Location: ./livreor.php");
-        //     echo 'id ou la session ne correspond pas';
-        // }
 
-        //MOMENT DU POST
+        ////////////////////////////////////////// REPONSE ///////////////////////////////////////////////////
 
         if (isset($_POST['reponse'])) {
-            ////////////////////////////////////////// REPONSE ///////////////////////////////////////////////////
-            $id_commentaire = isset($_GET['reponse']);
+            $id_commentaire = $_GET['reponse'];
             $commentaire = $_POST['reponse'];
             $id_utilisateur = $_SESSION['id'];
             $date = date("Y-m-d H:i:s");
-            if (!empty($commentaire) || $commentaire != NULL) {
+            if (!empty($commentaire)) {
                 if ($mode_edition == 0) {
                     $getUser = $bdd->prepare("INSERT INTO reponses (reponse, id_utilisateur ,id_commentaire ,date_reponse) VALUES (?,?,?,?)");
                     $getUser->execute([$commentaire, $id_utilisateur, $id_commentaire, $date]);
@@ -75,7 +65,7 @@ if (!isset($_SESSION['login'])) {
                     $update = $bdd->prepare('UPDATE reponses SET reponse = ? , date_reponse = ? WHERE id = ?');
                     $update->execute([$commentaire, $date, $edit_id]);
                     $message = "Votre message a bien été édité !";
-                    header("Location: ./livreor.php");
+                    // header("Location: ./livreor.php");
                 }
             } else {
                 $message = "Veuillez écrire un commentaire";
@@ -99,7 +89,7 @@ if (!isset($_SESSION['login'])) {
                 <textarea name="reponse">
                     <?php
                     if ($mode_edition == 1) {
-                        // echo htmlspecialchars($edit_commentaire);
+                        echo htmlspecialchars($edit_commentaire['reponse']);
                     }
                     ?>
                 </textarea>

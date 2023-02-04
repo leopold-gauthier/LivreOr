@@ -83,7 +83,7 @@ require "./include/config.php";
                             // 2 en meme temp je veux que l'url prenne l'id du commentaire 
                             // 3 je fait une condition pour reponse dans la tables reponses prenne les valeurs
                         ?>
-                            <a href="./reponse.php?reponse=<?= $livreor[$i]['id'] ?>">Répondre</a>
+                            <a class="repondre" href="./reponse.php?reponse=<?= $livreor[$i]['id'] ?>">Répondre</a>
                         <?php
                         }
                         ?>

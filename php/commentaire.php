@@ -26,16 +26,9 @@ if (!isset($_SESSION['login'])) {
     </header>
     <main>
         <?php
-        //"SELECT * FROM commentaires  JOIN utilisateurs ON utilisateurs.id = commentaires.id_utilisateur JOIN reponses ON reponses.id_commentaire = commentaires.id WHERE = ?");
-        $recupUser = $bdd->query("SELECT * FROM commentaires  JOIN utilisateurs ON utilisateurs.id = commentaires.id_utilisateur JOIN reponses ON reponses.id_commentaire = commentaires.id ");
-        $livreor = $recupUser->fetchALL(PDO::FETCH_ASSOC);
-
-        // var_dump($livreor);
         //////////////////////////////////////////// AFFICHER COMMENTAIRE POUR EDITER /////////////////////////////////////////////
         $mode_edition = 0;
         $message = "";
-
-        // if (isset($_GET['edit']) == $livreor[0]['id'] && isset($_SESSION['id']) == $livreor['id_utilisateur']) {
         // echo 'tout correspond';
         if (isset($_GET['edit']) and !empty($_GET['edit'])) {
             $mode_edition = 1;
@@ -52,21 +45,15 @@ if (!isset($_SESSION['login'])) {
         } else {
             // header("Location: ./livreor.php");
         }
-        // } else {
-        //     // header("Location: ./livreor.php");
-        //     echo 'id ou la session ne correspond pas';
-        // }
 
-        //MOMENT DU POST
+        ////////////////////////////////////////// COMMENTAIRE ///////////////////////////////////////////////////
 
         if (isset($_POST['commentaire'])) {
-            ////////////////////////////////////////// COMMENTAIRE ///////////////////////////////////////////////////
-            $commentaire = $_POST['commentaire'];
             $id_utilisateur = $_SESSION['id'];
+            $commentaire = $_POST['commentaire'];
             $date = date("Y-m-d H:i:s");
             if (!empty($commentaire)) {
                 if ($mode_edition == 0) {
-                    $userId = $_SESSION["id"];
                     $getUser = $bdd->prepare("INSERT INTO commentaires (commentaire, id_utilisateur ,date) VALUES (?,?,?)");
 
                     $getUser->bindValue(":id_utilisateur", $id_utilisateur);
@@ -84,6 +71,17 @@ if (!isset($_SESSION['login'])) {
                 $message = "Veuillez écrire un commentaire";
             }
         }
+
+        // $info = $bdd->prepare('SELECT * FROM commentaires WHERE id = ?');
+        // $info->execute(array($edit_id));
+        // $info = $info->fetch(PDO::FETCH_ASSOC);
+        // var_dump($info);
+
+        // if (isset($_GET['edit']) != $info['id'] && isset($_SESSION['id']) != $info['id_utilisateur']) {
+        //     //     // header("Location: ./livreor.php");
+        //     echo 'id ou la session ne correspond pas';
+        // }
+
 
         ?>
         <h3>

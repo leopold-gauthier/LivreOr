@@ -152,10 +152,19 @@ border-radius: 50%;
     /* width: 20%; */
     /* height: auto; */
     /* background-color: rgba(0, 0, 0, 0.66)55; */
-    color:rgba(245, 176, 47, 0.742);
+    /* color:rgba(245, 176, 47, 0.742); */
     position: static;
     text-align: end;
     border: none;
+}
+.repondre{
+    background-color: rgba(245, 176, 47, 0.742);
+    color: rgb(255, 255, 255);
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
 }
 .reponse{
     margin: 5%;
