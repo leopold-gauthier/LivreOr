@@ -78,13 +78,12 @@ require "./include/config.php";
                         <?php
                         } elseif ($livreor[$i]['login'] != $_SESSION['login']) {
                             // var_dump($reponse[$i]);
-                            // var_dump($_SESSION);
 
                             // 1 quand j'appui sur sur l'ancre répondre ca ouvre l'include 
                             // 2 en meme temp je veux que l'url prenne l'id du commentaire 
                             // 3 je fait une condition pour reponse dans la tables reponses prenne les valeurs
                         ?>
-                            <a href="./commentaire.php?reponse=<?= $livreor[$i]['id'] ?>">Répondre</a>
+                            <a href="./reponse.php?reponse=<?= $livreor[$i]['id'] ?>">Répondre</a>
                         <?php
                         }
                         ?>
@@ -115,6 +114,20 @@ require "./include/config.php";
                                         <?= $reponse[$a]['reponse'] ?>
                                     </i>
                                 </p>
+                                <div id="modified">
+                                    <?php
+                                    if (isset($_SESSION['login']) == null) {
+                                        echo "";
+                                    } elseif ($reponse[$a]['login'] === $_SESSION['login'] || $_SESSION['login'] === 'admin') { ?>
+                                        <a href="./delete_reponse.php?id=<?= $reponse[$a]['id'] ?>">Supprimer</a>
+                                        |
+                                        <a href="./reponse.php?edit=<?= $reponse[$a]['id'] ?>">Editer</a>
+                                    <?php
+                                    } elseif ($reponse[$a]['login'] != $_SESSION['login']) {
+                                        echo "";
+                                    }
+                                    ?>
+                                </div>
                             </div>
 
                     <?php
