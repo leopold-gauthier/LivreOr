@@ -143,7 +143,6 @@ border-radius: 50%;
 #message a{
     font-family: 'Roboto', sans-serif;
     position: fixed;
-    width: 10%;
 }
 
 
@@ -160,7 +159,7 @@ border-radius: 50%;
 .repondre{
     background-color: rgba(245, 176, 47, 0.742);
     color: rgb(255, 255, 255);
-    padding: 10px 20px;
+     padding: 10px 30px; 
     text-align: center;
     text-decoration: none;
     display: inline-block;

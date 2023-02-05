@@ -65,7 +65,7 @@ if (!isset($_SESSION['login'])) {
                     $update = $bdd->prepare('UPDATE reponses SET reponse = ? , date_reponse = ? WHERE id = ?');
                     $update->execute([$commentaire, $date, $edit_id]);
                     $message = "Votre message a bien été édité !";
-                    // header("Location: ./livreor.php");
+                    header("Location: ./livreor.php");
                 }
             } else {
                 $message = "Veuillez écrire un commentaire";
